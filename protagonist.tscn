@@ -183,7 +183,7 @@ animations = [{
 "duration": 0.5,
 "texture": SubResource("AtlasTexture_l5rjn")
 }],
-"loop": true,
+"loop": false,
 "name": &"PlayerJump",
 "speed": 5.0
 }, {
@@ -316,13 +316,15 @@ _data = {
 script = ExtResource("1_5fgat")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1910814523]
+position = Vector2(-2.51, 0)
+scale = Vector2(0.63, 1)
 shape = SubResource("RectangleShape2D_lx1al")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1621687732]
 position = Vector2(-4.7683716e-07, 0)
 scale = Vector2(1.2500001, 1.25)
 sprite_frames = SubResource("SpriteFrames_2r1on")
-animation = &"PlayerYesTorchRun"
+animation = &"PlayerJump"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=146541963]
 zoom = Vector2(5, 5)
@@ -331,11 +333,9 @@ zoom = Vector2(5, 5)
 wait_time = 0.07
 
 [node name="Torch" type="Node2D" parent="." unique_id=558459611]
-position = Vector2(-7.29, 10.27)
 script = ExtResource("3_u6h7k")
 
 [node name="PointLight2D" type="PointLight2D" parent="Torch" unique_id=1080546604]
-position = Vector2(13, -10)
 texture = ExtResource("2_0if5s")
 
 [node name="Burning Out" type="Timer" parent="Torch" unique_id=1688055298]
@@ -344,6 +344,8 @@ wait_time = 10.0
 [node name="RopeDetector" type="Area2D" parent="." unique_id=1569276091]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RopeDetector" unique_id=308488639]
+position = Vector2(-2.51, 0)
+scale = Vector2(0.63, 1)
 shape = SubResource("RectangleShape2D_lx1al")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2125220324]

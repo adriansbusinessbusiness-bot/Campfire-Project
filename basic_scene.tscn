@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://14cg0njwc8qi"]
 
-[ext_resource type="PackedScene" uid="uid://c6gkwmd0fgdqt" path="res://protagonist.tscn" id="1_r4pny"]
+[ext_resource type="PackedScene" uid="uid://xv7ssv0wmydp" path="res://protagonist.tscn" id="1_r4pny"]
 [ext_resource type="Texture2D" uid="uid://stx1np47k227" path="res://SnowTilemap .png" id="3_wl7ka"]
 [ext_resource type="PackedScene" path="res://Monster.tscn" id="4_lx1al"]
 [ext_resource type="PackedScene" uid="uid://bl05ntwtwr7vr" path="res://grabbleTorch.tscn" id="5_r4pny"]
@@ -223,6 +223,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(127, -8, 156, -8, 155, 
 [node name="Basic Scene" type="Node2D" unique_id=818341803]
 
 [node name="Protagonist" parent="." unique_id=2114517761 instance=ExtResource("1_r4pny")]
+z_index = 1
 
 [node name="TileMap" type="TileMap" parent="." unique_id=1122482099]
 tile_set = SubResource("TileSet_5f4ac")
@@ -235,9 +236,8 @@ color = Color(0.051970966, 0.05197096, 0.05197095, 1)
 [node name="GrabbleTorch" parent="." unique_id=1143973062 instance=ExtResource("5_r4pny")]
 position = Vector2(78, 11)
 
-[node name="Rope" parent="." unique_id=1184049864 node_paths=PackedStringArray("player") instance=ExtResource("6_5f4ac")]
+[node name="Rope" parent="." unique_id=1184049864 instance=ExtResource("6_5f4ac")]
 position = Vector2(113, 19)
-player = NodePath("")
 
 [node name="Monster" parent="." unique_id=508455538 instance=ExtResource("4_lx1al")]
 position = Vector2(-92, -40)

@@ -7,9 +7,8 @@ const JUMP_VELOCITY = -175.0
 
 var floating = false;
 var floated = false
-var jumping = false ## This one is specifically for use in the animation, it says that the animation has begun so don't play it again
 
-var hasTorch = true;
+var presentAnimation : String
 
 var inRope = false;
 var holdingRope = false;
@@ -28,15 +27,12 @@ func _physics_process(delta: float) -> void:
 		##print("should be on rope")
 		if (Input.is_action_pressed("Use Rope")):
 			if !(Input.is_action_pressed("Climb Down") || Input.is_action_pressed("Climb Up")):
-				print("Neutralizing")
 				velocity.y = move_toward(velocity.y,0,500*delta)
 			else:
 				if (Input.is_action_pressed("Climb Up")):
 					velocity.y = SPEED/-2 ##move_toward(velocity.y,SPEED/2,100*delta);
-					print("climbing down")
 				if (Input.is_action_pressed("Climb Down")):
 					velocity.y = SPEED/2 ##move_toward(velocity.y,SPEED/-2,100*delta);
-					print("climbing up")
 			holdingRope = true;
 		else:
 			holdingRope = false;
@@ -98,11 +94,51 @@ func checkDirection():
 	if (velocity.x < 0):
 		transform.x = Vector2(-1,0);
 
-func _process(delta: float): ## This is mostly for the animation so far
-	if (is_on_floor() && velocity.x != 0):
-			if (!$Sprite2D.is_playing()):
-				$Sprite2D.play("PlayerNoTorchRun")
+func checkWhichAnimation():
+	if (!is_on_floor()):
+		if (holdingRope):
+			pass #But the answer is climbSet
+		else:
+			pass #But the answer is jumpSet
 	else:
-		if (is_on_floor()):
-			$Sprite2D.set_frame_and_progress(0,0.0);
+		if velocity.x != 0:
+			if ($Torch/PointLight2D.energy > 0):
+				pass #But the answer is YesTorchRun
+			else:
+				pass #But the answer is noTorchRun
+		else:
+			if ($Torch/PointLight2D.energy > 0):
+				pass #But the answer is YesTorch
+			else:
+				pass #But the answer is noTorch
+
+func _process(delta: float): ## This is mostly for the animation so far
+	if (!is_on_floor()):
+		if (holdingRope):
+			if (presentAnimation != "PlayerClimb"):
+				$Sprite2D.play("PlayerClimb")
+				presentAnimation = "PlayerClimb"
+		else: 
+			if (presentAnimation != "PlayerJump"):
+				$Sprite2D.play("PlayerJump")
+				presentAnimation = "PlayerJump"
+	else: 
+		if velocity.x != 0:
+			if ($Torch/PointLight2D.energy > 0):
+				if (presentAnimation != "PlayerYesTorchRun"):
+					$Sprite2D.play("PlayerYesTorchRun")
+					presentAnimation = "PlayerYesTorchRun"
+			else:
+				if (presentAnimation != "PlayerNoTorchRun"):
+					$Sprite2D.play("PlayerNoTorchRun")
+					presentAnimation = "PlayerNoTorchRun"
+		else:
+			if ($Torch/PointLight2D.energy > 0):
+				if (presentAnimation != "PlayerYesTorch"):
+					$Sprite2D.play("PlayerYesTorch")
+					presentAnimation = "PlayerYesTorch"
+			else:
+				if (presentAnimation != "PlayerNoTorch"):
+					$Sprite2D.play("PlayerNoTorch")
+					presentAnimation = "PlayerNoTorch"
 	checkDirection()
