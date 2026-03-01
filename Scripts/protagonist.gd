@@ -20,20 +20,16 @@ var onFloor : bool
 
 func _physics_process(delta: float) -> void:
 	onFloor = is_on_floor()
-	if (inRope):
-		onFloor = true
-		print("should be on rope")
-		if (Input.is_action_pressed("Use Rope")):
-			velocity.y = 10
+	
 	
 	handle_gravity(delta);
 
 	if (inRope):
-		onFloor = true
 		##print("should be on rope")
 		if (Input.is_action_pressed("Use Rope")):
 			if !(Input.is_action_pressed("Climb Down") || Input.is_action_pressed("Climb Up")):
-				velocity.y = move_toward(velocity.y,0,200*delta)
+				print("Neutralizing")
+				velocity.y = move_toward(velocity.y,0,500*delta)
 			else:
 				if (Input.is_action_pressed("Climb Up")):
 					velocity.y = SPEED/-2 ##move_toward(velocity.y,SPEED/2,100*delta);
@@ -61,14 +57,11 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func handle_gravity(delta: float): 
-	if !onFloor:
+	if !onFloor && !holdingRope:
 		velocity += get_gravity() * delta;
 		if !floating and !floated:
 			floating = true
 			$CoyoteTimer.start();
-			if !inRope: #not sure what this does, so I kept it despite changing everything 
-				velocity += get_gravity() * delta * 0.01;
-				print("Slowly going down")
 	else:
 		floating = false;
 		floated = false
